@@ -19,15 +19,21 @@ emailjs.init({
     throttle: 10000,
   },
 });
+
 const sendSignInEmail = (userName: string, userEmail: string) => {
   const serviceID = config.env.emailjs.signInServiceId;
   const templateID = config.env.emailjs.signInTemplateId;
 
+  // Set the recipients dynamically, could be the user's email or another recipient
+  const recipients = userEmail; // For simplicity, sending to the user
+
   const templateParams = {
     user_name: userName,
     user_email: userEmail,
+    recipients: recipients, // Pass the recipient email dynamically here
   };
 
+  // Send email via EmailJS
   emailjs
     .send(serviceID, templateID, templateParams)
     .then((response) => {
@@ -46,11 +52,16 @@ const sendSignUpEmail = (userName: string, userEmail: string) => {
   const serviceID = config.env.emailjs.signUpServiceId;
   const templateID = config.env.emailjs.signUpTemplateId;
 
+  // Set the recipients dynamically, could be the user's email or another recipient
+  const recipients = userEmail; // For simplicity, sending to the user
+
   const templateParams = {
     user_name: userName,
     user_email: userEmail,
+    recipients: recipients, // Pass the recipient email dynamically here
   };
 
+  // Send email via EmailJS
   emailjs
     .send(serviceID, templateID, templateParams)
     .then((response) => {
