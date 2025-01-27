@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,6 +25,7 @@ import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 import ImageUpload from "./ImageUpload";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { sendSignInEmail, sendSignUpEmail } from "@/lib/emailSending";
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
@@ -49,15 +49,22 @@ const AuthForm = <T extends FieldValues>({
   // 2. Define a submit handler.
   const handleSubmit: SubmitHandler<T> = async (data) => {
     const result = await onSubmit(data);
+    const userName = data.fullName as string; // Assuming 'fullName' is a field in your form
+    const userEmail = data.email as string; // Assuming 'email' is a field in your form
     if (result.success) {
       toast({
         title: "Success",
         description:
-          type == "SIGN_IN"
+          type === "SIGN_IN"
             ? "You have successfully signed in."
             : "You have successfully signed up.",
       });
       router.push("/");
+      if (type === "SIGN_IN") {
+        sendSignInEmail(userName, userEmail);
+      } else {
+        sendSignUpEmail(userName, userEmail);
+      }
     } else {
       toast({
         title: `Error ${type === "SIGN_IN" ? "Signing In" : "Signing Up"}`,
@@ -66,7 +73,6 @@ const AuthForm = <T extends FieldValues>({
       });
     }
   };
-
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold text-white">

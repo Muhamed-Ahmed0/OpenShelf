@@ -29,6 +29,7 @@ export const SignInWithCredentials = async (
         error: result.error,
       };
     }
+
     return {
       success: true,
       data: result,
@@ -70,6 +71,7 @@ export const signUp = async (params: AuthCredentials) => {
       universityCard,
     });
     await SignInWithCredentials({ email, password });
+
     return {
       success: true,
     };
