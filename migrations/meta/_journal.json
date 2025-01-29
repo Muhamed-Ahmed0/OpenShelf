@@ -8,6 +8,20 @@
       "when": 1737901302208,
       "tag": "0000_short_impossible_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1738162868671,
+      "tag": "0001_past_king_cobra",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1738179915794,
+      "tag": "0002_pale_invaders",
+      "breakpoints": true
     }
   ]
 }
